@@ -1,8 +1,8 @@
 # DevOps_Techtalk
 
-#Google cloud platform
+# Google cloud platform
 
-##Setting up Jenkins on Container Engine
+## Setting up Jenkins on Container Engine
 
 
 Objectives
@@ -31,4 +31,4 @@ Set up and Steps:
 
 - Set the default Compute Engine zone to us-east1-d
 
-''' gcloud config set compute/zone us-east1-d '''
+``` gcloud config set compute/zone us-east1-d ```
