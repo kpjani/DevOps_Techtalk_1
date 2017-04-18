@@ -71,7 +71,7 @@
 **Creating the Jenkins home volume**
 
 
-    ```gcloud compute images create jenkins-home-image --source-uri https://storage.googleapis.com/solutions-public-   assets/jenkins-cd/jenkins-home-v3.tar.gz```
+    ```gcloud compute images create jenkins-home-image --source-uri https://storage.googleapis.com/solutions-public- assets/jenkins-cd/jenkins-home-v3.tar.gz```
 
     ```gcloud compute disks create jenkins-home --image jenkins-home-image --zone us-east1-d```
 
@@ -92,18 +92,46 @@
 
     ```kubectl create secret generic jenkins --from-file=jenkins/k8s/options --namespace=jenkins```
 
-```kubectl apply -f jenkins/k8s/```
+- Creating the Jenkins deployment and services
 
-```kubectl get pods --namespace jenkins```
+    ```kubectl apply -f jenkins/k8s/```
 
-```kubectl get svc --namespace jenkins```
+- Confirm that the pod is running.
 
-```openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/tls.key -out /tmp/tls.crt -subj "/CN=jenkins/O=jenkins"````
+    ```kubectl get pods --namespace jenkins```
 
-```kubectl create secret generic tls --from-file=/tmp/tls.crt --from-file=/tmp/tls.key --namespace jenkins```
+**Configuring external load balancing**
 
-```kubectl apply -f jenkins/k8s/lb/ingress.yaml```
+- List the Jenkins services.
 
-```kubectl describe ingress jenkins --namespace jenkins````
+    ```kubectl get svc --namespace jenkins```
 
--  copy ip address and open in browser
+**Setting up encryption**
+
+- If you don’t already have an SSL certificate for your domain, you can create a temporary SSL certificate and key pair by running the following command.
+
+
+
+    ```openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /tmp/tls.key -out /tmp/tls.crt -subj         "/CN=jenkins/O=jenkins"````
+
+- Upload the certificate to Kubernetes as a secret object
+
+    ```kubectl create secret generic tls --from-file=/tmp/tls.crt --from-file=/tmp/tls.key --namespace jenkins```
+
+- Creating the load balancer
+
+    ```kubectl apply -f jenkins/k8s/lb/ingress.yaml```
+
+**Connecting to Jenkins**
+
+- Check the status of the load balancer’s health checks.
+
+    ```kubectl describe ingress jenkins --namespace jenkins````
+
+-  copy ip address from the output of previous command and open in browser
+
+- Log in with Jenkins credentials
+    
+    uname: Jenkins
+    
+    pwd: same as you set up previously
