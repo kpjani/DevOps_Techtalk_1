@@ -5,7 +5,7 @@
 ## Setting up Jenkins on Container Engine
 
 
-Objectives
+**Objectives**
 
 - Creating a Kubernetes cluster with Container Engine.
 
@@ -16,7 +16,8 @@ Objectives
 - Connecting to Jenkins.
 
 
-Prerequisites:
+
+**Prerequisites:**
 
 - Set up a GCP account
 
@@ -25,10 +26,19 @@ Prerequisites:
 - Enable the Google Compute Engine, Google Container Engine APIs.
 
 
-Set up and Steps:
+
+**Set up and Steps:**
 
 - Activate google cloud shell 
 
 - Set the default Compute Engine zone to us-east1-d
 
-``` gcloud config set compute/zone us-east1-d ```
+    ``` gcloud config set compute/zone us-east1-d ```
+    
+- Clone the sample code
+    
+    ```git clone https://github.com/GoogleCloudPlatform/continuous-deployment-on-kubernetes.git```
+    
+- Navigate to the sample code directory
+
+    ```cd continuous-deployment-on-kubernetes```
